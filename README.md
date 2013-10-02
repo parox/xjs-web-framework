@@ -16,7 +16,7 @@ Nowadays there are a lot of web framework that makes the web development easy, l
 Installation
 =================
 
-#run install.py
+run install.py
 ./install.py
 
 
