@@ -12,6 +12,13 @@ There are very extensions for node, who makes web development easy, but this fra
 Nowadays there are a lot of web framework that makes the web development easy, like Django, Rails, Zend, etc. 
 
 
+Requirements
+=================
+
+  - Node.js
+  - NPM
+
+
 Installation
 =================
 
@@ -64,6 +71,7 @@ The xjs MVC Standard
 =================
 
 The xjs framework work using MVC methodology. Into the project there is a folder called app. Into app folder there are tree foldres:
+
   - _Controller
   - _Model
   - _View
