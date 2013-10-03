@@ -7,8 +7,7 @@ JavaScript Web Framework for web apps node based using MVC Patterns and sockets 
 Why?
 =================
 
-JavaScript is a beautiful language that every day conquest more and more market.
-Since Node.js makes possible run JavaScript server side, some thing changes the Node.js is every day becoming more popular.
+Since Node.js makes possible run JavaScript server side, some thing changes, and the Node.js is every day becoming more popular.
 There are very extensions for node, who makes web development easy, but this framework have the mission of inplements a standard in javascripts web apps, and makes javascript more popular.
 Nowadays there are a lot of web framework that makes the web development easy, like Django, Rails, Zend, etc. 
 
@@ -57,7 +56,7 @@ If you want you can change the version but is necessary have known about linux s
 Commands
 =================
 
-The xjs commands are very simples. The xjs commands is a simple tool to furnish the structure of create process.
+The xjs commands are very simple. The xjs commands is a simple tool to furnish the structure of create process.
 The commands has a standard, xjs generate [resouce] [name]. 
 
 
@@ -152,7 +151,7 @@ The other attribute is an object that contains some functions properties. Each p
 View
 =================
 
-Views are simples static files. The xjs framework works with W3C standards, and when you create a project, is generated into _View folder a structure based on HTML5Boilerplate.
+Views are simple static files. The xjs framework works with W3C standards, and when you create a project, is generated into _View folder a structure based on HTML5Boilerplate.
 In Other words, you can create layouts without care about the other things. In projects that there is a webdesigner, he can create the layout and html,css, images, etc, and when he finish just copyt ho _View folder.
 
 
