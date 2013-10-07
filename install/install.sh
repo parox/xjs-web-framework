@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #extract files of the software
-#tar -xvf src.tar
+tar -xvf src.tar
 
 #create folder in /etc
 mkdir /etc/xjs
