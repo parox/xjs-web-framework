@@ -42,104 +42,106 @@ function XJS(){
     		var sControllerFileName 	= controllers[controller];
 			var sResourceName			= sControllerFileName.split("_controller")[0];
 			
-			xjsConfig.resources.push(sResourceName);
-			
-			//	create an dinamic resource variable
-			eval("var resource =  require(xjsConfig.CONTROLLER_FOLDER+'/"+ sResourceName +"_controller')."+ sResourceName +"Controller");
-			
-			//	create map for each method on controller
-			for (var method in resource){
-				eval("var restMethod = resource['"+method+"'];");
-				var aParams = this.getFunctionParams(restMethod);
-				var sParams = "";
-				var bRestGet = (method.charAt(0) == "_") ? false : true;
+			if (sResourceName !== ".gitignore"){
 
-				method = method.replace("_","");
+				xjsConfig.resources.push(sResourceName);
+				
+				//	create an dinamic resource variable
+				eval("var resource =  require(xjsConfig.CONTROLLER_FOLDER+'/"+ sResourceName +"_controller')."+ sResourceName +"Controller");
+				
+				//	create map for each method on controller
+				for (var method in resource){
+					eval("var restMethod = resource['"+method+"'];");
+					var aParams = this.getFunctionParams(restMethod);
+					var sParams = "";
+					var bRestGet = (method.charAt(0) == "_") ? false : true;
 
-				//	Create params for map
-				for (var param in aParams){
-					if (bRestGet){
-						sParams += "/:" + aParams[param] + "?";
+					method = method.replace("_","");
 
-						//	Create listenner for each param
-						app.param(aParams[param], /^.+$/);
+					//	Create params for map
+					for (var param in aParams){
+						if (bRestGet){
+							sParams += "/:" + aParams[param] + "?";
+
+							//	Create listenner for each param
+							app.param(aParams[param], /^.+$/);
+						}
 					}
-				}
 
-				//	Concat resource name with parameters on controller to create the mapping
-				var sMap = "/" + sResourceName.toLowerCase() + "/" + method + sParams;
-				if (method == "index"){
-					var sMap = "/" + sResourceName.toLowerCase();
-				}
-				
-				
-				//	Add all urls for xjsConfig object
-				xjsConfig.urlMapping["/" + sResourceName.toLowerCase() + "/" + method] = {
-					callBack	: restMethod
-				};
-				
-				//	Create the listenner and link to repective controller method	
-				
-				if (bRestGet){
-					console.log("GET  -\t" + sMap);	
+					//	Concat resource name with parameters on controller to create the mapping
+					var sMap = "/" + sResourceName.toLowerCase() + "/" + method + sParams;
+					if (method == "index"){
+						var sMap = "/" + sResourceName.toLowerCase();
+					}
+					
+					
+					//	Add all urls for xjsConfig object
+					xjsConfig.urlMapping["/" + sResourceName.toLowerCase() + "/" + method] = {
+						callBack	: restMethod
+					};
+					
+					//	Create the listenner and link to repective controller method	
+					
+					if (bRestGet){
+						console.log("GET  -\t" + sMap);	
 
-					app.get(sMap, function(req, res){
-						var url = req.path;
+						app.get(sMap, function(req, res){
+							var url = req.path;
 
-						if (url.charAt(0) == "/"){
-						    url = url.substr(1, url.length);
-						} else {
-						    url = url.substr(0, url.length);
-						}
+							if (url.charAt(0) == "/"){
+							    url = url.substr(1, url.length);
+							} else {
+							    url = url.substr(0, url.length);
+							}
 
-						var aUrl = url.split("/");
+							var aUrl = url.split("/");
 
-						url = "/" + aUrl[0] + "/" + aUrl[1];
-						if (!aUrl[1]){
-							url = "/" + aUrl[0] + "/index";
-						}
+							url = "/" + aUrl[0] + "/" + aUrl[1];
+							if (!aUrl[1]){
+								url = "/" + aUrl[0] + "/index";
+							}
 
-						var oResp = xjs.treatControllerGetResponse(xjsConfig.urlMapping[url].callBack, req.params);
+							var oResp = xjs.treatControllerGetResponse(xjsConfig.urlMapping[url].callBack, req.params);
 
-						if (oResp.model){
-							console.log("Model");
-							Model[oResp.action](req, res, oResp.model, oResp.params);
-						} else {
-							res.send(oResp);	
-						}
+							if (oResp.model){
+								console.log("Model");
+								Model[oResp.action](req, res, oResp.model, oResp.params);
+							} else {
+								res.send(oResp);	
+							}
 
 
-					});
-				} else {
-					sMap = sMap.replace("_", "");
-					console.log("POST -\t" + sMap);	
-					app.post(sMap, function(req, res){
-						var url = req.path;
+						});
+					} else {
+						sMap = sMap.replace("_", "");
+						console.log("POST -\t" + sMap);	
+						app.post(sMap, function(req, res){
+							var url = req.path;
 
-						if (url.charAt(0) == "/"){
-						    url = url.substr(1, url.length);
-						} else {
-						    url = url.substr(0, url.length);
-						}
+							if (url.charAt(0) == "/"){
+							    url = url.substr(1, url.length);
+							} else {
+							    url = url.substr(0, url.length);
+							}
 
-						var aUrl = url.split("/");
+							var aUrl = url.split("/");
 
-						url = "/" + aUrl[0] + "/" + aUrl[1];
+							url = "/" + aUrl[0] + "/" + aUrl[1];
 
-						var oResp = xjs.treatControllerPostResponse(xjsConfig.urlMapping[url].callBack, req.body);
+							var oResp = xjs.treatControllerPostResponse(xjsConfig.urlMapping[url].callBack, req.body);
 
-						if (oResp.model){
-							console.log("Model");
-							Model[oResp.action](req, res, oResp.model, oResp.params, oResp.object);
-						} else {
-							res.send(oResp);	
-						}
-					});
-				}
-				
-			}
+							if (oResp.model){
+								console.log("Model");
+								Model[oResp.action](req, res, oResp.model, oResp.params, oResp.object);
+							} else {
+								res.send(oResp);	
+							}
+						});
+					}
+				}	
+    			console.log("Done!");
+    		}
     	}
-    	console.log("Done!");
     };
 
     this.getFunctionParams = function(fn){
@@ -218,25 +220,29 @@ function XJS(){
 			var sResourceName	= sModelFileName.split("_model")[0];
 			var ResourceSchema;
 
-			//	create an dinamic resource variable
-			eval("var resource =  require(xjsConfig.MODEL_FOLDER+'/"+ sResourceName +"_model')."+ sResourceName +"Model");
-			
-			//	Add fields to model
-			if (resource.fields){
-				ResourceSchema = mongoose.Schema(resource.fields);
-			}
+			if (sResourceName !== ".gitignore"){
 
-			//	Add methods setted into models file to schema
-			if (resource.methods){
-				for (var property in resource.methods){
-					eval("var attr = resource.methods['"+property+"'];");
-					
-					ResourceSchema.methods[property] = attr;
+				//	create an dinamic resource variable
+				eval("var resource =  require(xjsConfig.MODEL_FOLDER+'/"+ sResourceName +"_model')."+ sResourceName +"Model");
+				
+				//	Add fields to model
+				if (resource.fields){
+					ResourceSchema = mongoose.Schema(resource.fields);
 				}
-			}
 
-			var sModelName = sResourceName+"Model";
-			eval(sModelName+" = mongoose.model('"+ sModelName +"', ResourceSchema);");
+				//	Add methods setted into models file to schema
+				if (resource.methods){
+					for (var property in resource.methods){
+						eval("var attr = resource.methods['"+property+"'];");
+						
+						ResourceSchema.methods[property] = attr;
+					}
+				}
+
+				var sModelName = sResourceName+"Model";
+				eval(sModelName+" = mongoose.model('"+ sModelName +"', ResourceSchema);");
+
+			}
 		}
 		console.log("Done!");
     };
