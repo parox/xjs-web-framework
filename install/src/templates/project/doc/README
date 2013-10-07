@@ -1,7 +1,0 @@
-	#install node and npm
-	
-		npm install express
-		npm install mongodb
-		npm install mongoose
-
-		
