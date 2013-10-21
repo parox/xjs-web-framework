@@ -42,7 +42,7 @@ function XJS(){
     		var sControllerFileName 	= controllers[controller];
 			var sResourceName			= sControllerFileName.split("_controller")[0];
 			
-			if (sResourceName !== ".gitignore"){
+			if (sResourceName.charAt(0) !== "."){
 
 				xjsConfig.resources.push(sResourceName);
 				
