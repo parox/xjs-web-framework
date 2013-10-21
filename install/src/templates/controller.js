@@ -23,7 +23,7 @@ function Controller(){
 		return ({
 			model : Model		,
 			action: 'update'	,
-			params: user 		,
+			params: resource 	,
 			object: {name: resource.name}
 		});
 	}
