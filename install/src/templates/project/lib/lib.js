@@ -41,7 +41,8 @@ function XJS(){
 
     		var sControllerFileName 	= controllers[controller];
 			var sResourceName			= sControllerFileName.split("_controller")[0];
-			
+			var sModelName 				= sResourceName + "Model";
+
 				if (sResourceName.charAt(0) !== "."){
 
 				xjsConfig.resources.push(sResourceName);
@@ -49,95 +50,96 @@ function XJS(){
 				//	create an dinamic resource variable
 				eval("var resource =  require(xjsConfig.CONTROLLER_FOLDER+'/"+ sResourceName +"_controller')."+ sResourceName +"Controller");
 				
-				//	create map for each method on controller
-				for (var method in resource){
-					eval("var restMethod = resource['"+method+"'];");
-					var aParams = this.getFunctionParams(restMethod);
-					var sParams = "";
-					var bRestGet = (method.charAt(0) == "_") ? false : true;
+				// ###############################################################
+				//							create REST
+				// ###############################################################
+				var sURL 		= "/" + sResourceName.toLowerCase();
+				var sParamURL 	= "/" + sResourceName.toLowerCase() + "/:id";
 
-					method = method.replace("_","");
+				//	POST
+				app.post(sURL, function (req, res) {
+				    var product_data = req.body;
+				    
+				    eval("var product = new "+ sModelName +"(product_data)");
 
-					//	Create params for map
-					for (var param in aParams){
-						if (bRestGet){
-							sParams += "/:" + aParams[param] + "?";
+				    product.save(function (error, data) {
+				        if (error) {
+				            res.json(error);
+				        } else {
+				            console.log("Added New Product");
+				            res.statusCode = 201;
+				            res.send();
+				        }
+				    });
+				});
 
-							//	Create listenner for each param
-							app.param(aParams[param], /^.+$/);
-						}
-					}
+				//	GET
+				app.get(sURL, function (req, res) {
+				    eval(sModelName+".find({}, function(error, data) {"+
+				        "res.json(data);"+
+				    "})");
+				});
 
-					//	Concat resource name with parameters on controller to create the mapping
-					var sMap = "/" + sResourceName.toLowerCase() + "/" + method + sParams;
-					if (method == "index"){
-						var sMap = "/" + sResourceName.toLowerCase();
-					}
-					
-					//	Add all urls for xjsConfig object
-					xjsConfig.urlMapping["/" + sResourceName.toLowerCase() + "/" + method] = {
-						callBack	: restMethod
-					};
-					
-					//	Create the listenner and link to repective controller method	
-					
-					if (bRestGet){
-						console.log("GET  -\t" + sMap);	
+				app.get(sParamURL, function (req, res) {
+				    eval(sModelName+".find({_id: req.params.id}, function(error, data) {"+
+				        "res.json(data);"+
+				    "})");
+				});
 
-						app.get(sMap, function(req, res){
-							var url = req.path;
+				//	PUT
+				app.put(sURL, function (req, res) {
+				    eval(sModelName+".update("+
+				        "{},"+
+				        "{"+
+				            "$set: req.body"+
+				        "},"+
+				        "{ multi: true },"+
+				        "true"+
+				    ")");
+				    console.log("Updated Existing Product with ID: " + req.params.id);
+				    res.send();        
+				});
 
-							if (url.charAt(0) == "/"){
-							    url = url.substr(1, url.length);
-							} else {
-							    url = url.substr(0, url.length);
-							}
+				app.put(sParamURL, function (req, res) {
+				    eval(sModelName+".update("+
+				        "{_id:req.params.id},"+
+				        "{"+
+				            "$set: req.body"+
+				        "},"+
+				        "false,"+
+				        "true"+
+				    ")");
+				    console.log("Updated Existing Product with ID: " + req.params.id);
+				    res.send();        
+				});
 
-							var aUrl = url.split("/");
+				//	DELETE
+				app.delete(sURL, function (req, res) {
 
-							url = "/" + aUrl[0] + "/" + aUrl[1];
-							if (!aUrl[1]){
-								url = "/" + aUrl[0] + "/index";
-							}
+						eval(sModelName+".find({}, function (error, products) {"+
+						    "products.forEach(function (product) {"+
+							    "product.remove();"+
+							"});"+
 
-							var oResp = xjs.treatControllerGetResponse(xjsConfig.urlMapping[url].callBack, req.params);
-
-							if (oResp.model){
-								console.log("Model");
-								Model[oResp.action](req, res, oResp.model, oResp.params);
-							} else {
-								res.send(oResp);	
-							}
+						    "return res.send();"+
+				    	"});");
+				    
+				});
 
 
-						});
-					} else {
-						sMap = sMap.replace("_", "");
-						console.log("POST -\t" + sMap);	
-						app.post(sMap, function(req, res){
-							var url = req.path;
+				app.delete(sParamURL, function (req, res) {
+					return (eval(sModelName+".findById(req.params.id, function (error, product) {"+
+					        "return product.remove(function (error) {"+
+					            "if (error) {"+
+					                "console.log(error);"+
+					            "} else {"+
+					                "console.log('deleted product: ' + req.params.id);"+
+					                "return res.send();"+
+					            "}"+
+					        "});"+
+					    "});"));
+				});
 
-							if (url.charAt(0) == "/"){
-							    url = url.substr(1, url.length);
-							} else {
-							    url = url.substr(0, url.length);
-							}
-
-							var aUrl = url.split("/");
-
-							url = "/" + aUrl[0] + "/" + aUrl[1];
-
-							var oResp = xjs.treatControllerPostResponse(xjsConfig.urlMapping[url].callBack, req.body);
-
-							if (oResp.model){
-								console.log("Model");
-								Model[oResp.action](req, res, oResp.model, oResp.params, oResp.object);
-							} else {
-								res.send(oResp);	
-							}
-						});
-					}
-				}	
     			console.log("Done!");
     		}
     	}
