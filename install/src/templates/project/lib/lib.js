@@ -203,47 +203,50 @@ function XJS(){
 
     this.initDataBase = function(){
 		mongoose.connect('mongodb://' + xjsConfig.DATABASES.default.HOST + '/' + xjsConfig.DATABASES.default.NAME);
-
 		var db = mongoose.connection;
-		db.on('error', console.error.bind(console, 'DataBase connection error:'));
+		
+
+		//	If DB connection fail
+		db.on('error', console.error.bind(
+			console, 'DataBase connection error:')
+		);
+
+		//	If DB connection success
 		db.once('open', function callback () {
 			// yay!
 			console.log("Database connected successful");
-		});
 
-		console.log("Loading Database Schemas");
-		models = fs.readdirSync(xjsConfig.MODEL_FOLDER);
-    	for (var model in models){
+			// Loading Database Schemas
+			models = fs.readdirSync(xjsConfig.MODEL_FOLDER);
+	    	for (var model in models){
 
-    		var sModelFileName 	= models[model];
-			var sResourceName	= sModelFileName.split("_model")[0];
-			var ResourceSchema;
+	    		var sModelFileName 	= models[model];
+				var sResourceName	= sModelFileName.split("_model")[0];
+				var ResourceSchema;
 
-			if (sResourceName !== ".gitignore"){
+				if (sResourceName.charAt(0) !== "."){
 
-				//	create an dinamic resource variable
-				eval("var resource =  require(xjsConfig.MODEL_FOLDER+'/"+ sResourceName +"_model')."+ sResourceName +"Model");
-				
-				//	Add fields to model
-				if (resource.fields){
-					ResourceSchema = mongoose.Schema(resource.fields);
-				}
-
-				//	Add methods setted into models file to schema
-				if (resource.methods){
-					for (var property in resource.methods){
-						eval("var attr = resource.methods['"+property+"'];");
-						
-						ResourceSchema.methods[property] = attr;
+					//	create an dinamic resource variable
+					eval("var resource =  require(xjsConfig.MODEL_FOLDER+'/"+ sResourceName +"_model')."+ sResourceName +"Model");
+					
+					//	Add fields to model
+					if (resource.fields){
+						ResourceSchema = mongoose.Schema(resource.fields);
 					}
+
+					//	Add methods setted into models file to schema
+					if (resource.methods){
+						for (var property in resource.methods){
+							eval("var attr = resource.methods['"+property+"'];");
+							ResourceSchema.methods[property] = attr;
+						}
+					}
+
+					var sModelName = sResourceName+"Model";
+					eval(sModelName+" = mongoose.model('"+ sModelName +"', ResourceSchema);");
 				}
-
-				var sModelName = sResourceName+"Model";
-				eval(sModelName+" = mongoose.model('"+ sModelName +"', ResourceSchema);");
-
 			}
-		}
-		console.log("Done!");
+		});
     };
 };
 

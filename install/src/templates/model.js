@@ -1,12 +1,12 @@
 function Model(){
 
 	this.fields	= {
-		name	: String
+		id	: mongoose.Schema.Types.ObjectId
 	};
 
 	this.methods= {
-		getName	: function () {
-			return (this.name);
+		getId	: function () {
+			return (this.id);
 		}
 	};
 }
