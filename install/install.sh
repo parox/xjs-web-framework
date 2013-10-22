@@ -1,15 +1,15 @@
 #!/bin/bash
 
-#extract files of the software
-tar -xvf src.tar
-
 #create folder in /etc
 mkdir /etc/xjs
 
 #create folder in /etc
 mkdir /usr/lib/xjs
 
+#copy template folder for etc
 cp -r src/templates/ /etc/xjs
+
+#
 cp src/xjs_bash.js /usr/bin
 
 #rename xjs.px to xjs
