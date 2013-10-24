@@ -17,6 +17,17 @@ Requirements
 
   - Node.js
   - NPM
+  - Mongo DB
+
+
+Node Modules Dependêncies
+=================
+
+  - Express.js
+  - Socket.io
+  - MongoDB
+  - Mongoose
+  - FS-Extra
 
 
 Installation
@@ -53,10 +64,11 @@ XJS framework is a web framework written in javascript using node.js. Your missi
 This sctructure is created automatically running the command to create an app. All files and folders have a standards and will be explained in their respective session.
 XJS framework joined some utilities, and it uses module like
 
-  - express
-  - mongodb
-  - mongoose
-  - socketio
+  - Express.js
+  - Socket.io
+  - MongoDB
+  - Mongoose
+  - FS-Extra
 
 If you want you can change the version but is necessary have known about linux structure.
 
@@ -108,13 +120,11 @@ There is a command too to create the controller.
     xjs generate controller user
     
 This command create a controoler into the current folder you are. So for this works, you need to be on _Controller folder.
-The controller created contains some default methodos. The default methods are:
+The controller created contains some default methods just to show an example of how to create REST and Events. The default methods are:
 
-  - _create
-  - read
-  - _update
-  - _delete
-  - index
+  - _post
+  - get
+  - $event
 
 Each method make reference for one route, and the route is a REST. If the method starts with underscore (_), the REST is a POST REST, if not is a GET REST.
 Above each method there is a comment saying what is the url for this method
