@@ -22,6 +22,7 @@ chmod -R 755 /etc/xjs/
 #download necessary node modules 
 cd /etc/xjs/templates/project/lib
 npm install express
+npm install socket.io
 npm install mongodb
 npm install mongoose
 npm install --save fs-extra

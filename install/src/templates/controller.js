@@ -1,7 +1,7 @@
 function Controller(){
 
 	// POST /resource/create {name: 'foo'}
-	this._create = function (resource){
+	this._post = function (resource){
 		return ({
 			model : Model		,
 			action: 'create'	,
@@ -10,7 +10,7 @@ function Controller(){
 	};
 	
 	// GET /resource/read/01
-	this.read = function (id){
+	this.get = function (id){
 		return ({
 			model : Model		,
 			action: 'findOne'	,
@@ -19,31 +19,8 @@ function Controller(){
 	}
 	
 	// POST /resource/update {name: 'foo'}
-	this._update = function (resource){
-		return ({
-			model : Model		,
-			action: 'update'	,
-			params: resource 	,
-			object: {name: resource.name}
-		});
-	}
-	
-	// POST /resource/delete
-	this._delete = function (resource){
-		return ({
-			model : Model		,
-			action: 'remove'	,
-			params: resource	
-		});
-	}
-
-	// GET /resource
-	this.index = function (){
-		return ({
-			model : Model		,
-			action: 'find'		,
-			params: {}	
-		});
+	this.$event = function (resource){
+		console.log("This is a websockets example");
 	}
 }
 

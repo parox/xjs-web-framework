@@ -31,7 +31,7 @@ app.use(express.bodyParser());
 //	Create listenner and url for all methods includes into controllers
 xjs.createRestCalls();
 
-app.listen(xjsConfig.SERVER_PORT, function(){
+server.listen(xjsConfig.SERVER_PORT, function(){
 	//  Show a message of server started
     console.log("Server running at port: "+xjsConfig.SERVER_PORT+" ...");
 });

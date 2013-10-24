@@ -1,7 +1,8 @@
 function Model(){
 
 	this.fields	= {
-		id	: mongoose.Schema.Types.ObjectId
+		id		: ObjectId,
+		name	: String
 	};
 
 	this.methods= {
