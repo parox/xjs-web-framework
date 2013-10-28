@@ -127,7 +127,20 @@ The controller created contains some default methods just to show an example of 
   - $event
 
 Each method make reference for one route, and the route is a REST. If the method starts with underscore (_), the REST is a POST REST, if not is a GET REST.
-Above each method there is a comment saying what is the url for this method
+Above each method there is a comment saying what is the url for this method.
+By default, xjs generate REST methods that can be access using two urls and diferents AJAX types. According API standard, if you create a controller or scaffold called foo, for example, xjs will create two urls:
+
+
+-----------------------------------------------------------------------------------------------------------
+|     Resource    |         POST          |         GET       |        PUT       |        DELETE          |
+-----------------------------------------------------------------------------------------------------------
+|     /foo        |   Create a new foo    |     List foos     | Bulk update foos |    Delete all foos     |
+-----------------------------------------------------------------------------------------------------------
+|     /foo/01     |         Error         |   list foo id 1   | If exists update |  Delete foo id 01      |
+|                 |                       |                   | foo              |                        |
+|                 |                       |                   |                  |                        |
+|                 |                       |                   | if not error     |                        |
+-----------------------------------------------------------------------------------------------------------
 
 
 Model
