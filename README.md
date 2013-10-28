@@ -128,26 +128,16 @@ The controller created contains some default methods just to show an example of 
 
 Each method make reference for one route, and the route is a REST. If the method starts with underscore (_), the REST is a POST REST, if not is a GET REST.
 Above each method there is a comment saying what is the url for this method.
-By default, xjs generate REST methods that can be access using two urls and diferents AJAX types. According API standard, if you create a controller or scaffold called foo, for example, xjs will create two urls:
+By default, xjs generate REST methods that can be access using two urls and diferents AJAX verbs. 
+Getting the xjs command above, will be created a controller with these functions commented, and internally, will be created the following REST API.
 
 
-
-|     Resource    |         POST          |         GET       |        PUT       |        DELETE          |
-| --------------- |---------------------- | ----------------- | ---------------- | ---------------------- |
-|     /foo        |   Create a new foo    |     List foos     | Bulk update foos |    Delete all foos     |
-|     /foo/01     |         Error         |   list foo id 1   | If exists update |  Delete foo id 01      |
-|                 |                       |                   | foo              |                        |
-|                 |                       |                   |                  |                        |
-|                 |                       |                   | if not error     |                        |
------------------------------------------------------------------------------------------------------------
+|     Resource    |         POST          |         GET       |                PUT                |        DELETE          |
+| --------------- |---------------------- | ----------------- | --------------------------------- | ---------------------- |
+|     /user       |   Create a new user   |     List users    | Bulk update users                 |    Delete all users    |
+|     /user/01    |         Error         |   list user id 1  | If exists update user if not error|    Delete user id 01         
 
 
-
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
 
 Model
 =================
