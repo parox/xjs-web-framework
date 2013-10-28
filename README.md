@@ -131,17 +131,23 @@ Above each method there is a comment saying what is the url for this method.
 By default, xjs generate REST methods that can be access using two urls and diferents AJAX types. According API standard, if you create a controller or scaffold called foo, for example, xjs will create two urls:
 
 
------------------------------------------------------------------------------------------------------------
+
 |     Resource    |         POST          |         GET       |        PUT       |        DELETE          |
------------------------------------------------------------------------------------------------------------
+| --------------- |---------------------- | ----------------- | ---------------- | ---------------------- |
 |     /foo        |   Create a new foo    |     List foos     | Bulk update foos |    Delete all foos     |
------------------------------------------------------------------------------------------------------------
 |     /foo/01     |         Error         |   list foo id 1   | If exists update |  Delete foo id 01      |
 |                 |                       |                   | foo              |                        |
 |                 |                       |                   |                  |                        |
 |                 |                       |                   | if not error     |                        |
 -----------------------------------------------------------------------------------------------------------
 
+
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
 
 Model
 =================
