@@ -35,8 +35,8 @@ Installation
 
 run install.py in terminal:
 
-    chmod +x install.py
-    ./install.py
+    chmod +x install.sh
+    ./install.sh
 
 
 Architecture
