@@ -1,7 +1,7 @@
 function Controller(){
 
 	// POST /resource/create {name: 'foo'}
-	this._post = function (resource){
+	/*this._post = function (resource){
 		return ({
 			model : Model		,
 			action: 'create'	,
@@ -21,7 +21,7 @@ function Controller(){
 	// POST /resource/update {name: 'foo'}
 	this.$event = function (resource){
 		console.log("This is a websockets example");
-	}
+	}*/
 }
 
 exports.Controller = new Controller();

@@ -35,8 +35,8 @@ Installation
 
 run install.py in terminal:
 
-    chmod +x install.py
-    ./install.py
+    chmod +x install.sh
+    ./install.sh
 
 
 Architecture
@@ -127,7 +127,16 @@ The controller created contains some default methods just to show an example of 
   - $event
 
 Each method make reference for one route, and the route is a REST. If the method starts with underscore (_), the REST is a POST REST, if not is a GET REST.
-Above each method there is a comment saying what is the url for this method
+Above each method there is a comment saying what is the url for this method.
+By default, xjs generate REST methods that can be access using two urls and diferents AJAX verbs. 
+Getting the xjs command above, will be created a controller with these functions commented, and internally, will be created the following REST API.
+
+
+|     Resource    |         POST          |         GET       |                PUT                |        DELETE          |
+| --------------- |---------------------- | ----------------- | --------------------------------- | ---------------------- |
+|     /user       |   Create a new user   |     List users    | Bulk update users                 |    Delete all users    |
+|     /user/01    |         Error         |   list user id 1  | If exists update user if not error|    Delete user id 01         
+
 
 
 Model
