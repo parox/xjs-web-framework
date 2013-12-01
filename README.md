@@ -33,7 +33,14 @@ Node Modules Dependêncies
 Installation
 =================
 
-run install.py in terminal:
+Before run install.sh file, it's necessary install XJS requirements. For this take a look on links bellow:
+
+(Node.js and NPM dependence)
+https://gist.github.com/x-Code-x/2562576
+(Mongo.DB dependences)
+http://docs.mongodb.org/manual/administration/install-on-linux/
+
+As soon as dependences are installed, run install.sh in terminal:
 
     chmod +x install.sh
     ./install.sh
