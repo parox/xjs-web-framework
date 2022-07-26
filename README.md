@@ -8,7 +8,7 @@ Why?
 =================
 
 Since Node.js makes possible run JavaScript server side, some thing changes, and the Node.js is every day becoming more popular.
-There are very extensions for node, who makes web development easy, but this framework have the mission of inplements a standard in javascripts web apps, and makes javascript more popular.
+There are very extensions for node, who makes web development easy, but the mission of this framework is to implement a standard in javascripts web apps and make javascript more popular.
 Nowadays there are a lot of web framework that makes the web development easy, like Django, Rails, Zend, etc. 
 
 
